@@ -7,15 +7,17 @@ from rest_framework import permissions
 
 from .serializers import CommentSerializer, GroupSerializer, PostSerializer
 
+
 class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return (request.method in permissions.SAFE_METHODS
                 or obj.author == request.user)
 
+
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated] 
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class PostViewSet(viewsets.ModelViewSet):
